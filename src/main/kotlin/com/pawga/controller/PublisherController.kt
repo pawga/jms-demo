@@ -32,17 +32,6 @@ class PublisherController(
             producer.send(jmsMessage)
             return ok("Message Sent")
         } catch (exception: Exception) {
-            return serverError()
-        }
-    }
-
-    @Post("/string", produces=["text/plain"])
-    @ExecuteOn(TaskExecutors.BLOCKING)
-    fun publish(@Body message: String): HttpResponse<String> {
-        try {
-            producer.send(message)
-            return ok("Message Sent")
-        } catch (exception: Exception) {
             logger.error(exception.message)
             return serverError()
         }
