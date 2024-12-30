@@ -1,6 +1,5 @@
 package com.pawga.service
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.pawga.model.Message
 import io.micronaut.jms.activemq.artemis.configuration.ActiveMqArtemisConfiguration.CONNECTION_FACTORY_BEAN_NAME
 import io.micronaut.jms.annotations.JMSListener
