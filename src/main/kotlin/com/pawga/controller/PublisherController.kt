@@ -5,33 +5,45 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpResponse.ok
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Post
-import io.swagger.v3.oas.annotations.parameters.RequestBody
-import com.pawga.service.TextProducerImpl
+import com.pawga.service.TextProducer
 import io.micronaut.http.HttpResponse.serverError
+import io.micronaut.http.annotation.Body
+import io.micronaut.scheduling.TaskExecutors
+import io.micronaut.scheduling.annotation.ExecuteOn
+import io.micronaut.serde.ObjectMapper
+import org.slf4j.LoggerFactory
 
 /**
  * Created by sivannikov on 30.12.2024 13:29
  */
 
 @Controller("/message")
-class PublisherController(private val producer: TextProducerImpl) {
+class PublisherController(
+    private val producer: TextProducer,
+    private val mapper: ObjectMapper) {
 
-    @Post("/object")
-    fun publish(@RequestBody message: Message): HttpResponse<String> {
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
+    @Post("/object", produces=["text/plain"])
+    @ExecuteOn(TaskExecutors.BLOCKING)
+    fun publish(@Body message: Message): HttpResponse<String> {
         try {
-            producer.send(message)
+            val jmsMessage = mapper.writeValueAsString(message)
+            producer.send(jmsMessage)
             return ok("Message Sent")
         } catch (exception: Exception) {
             return serverError()
         }
     }
 
-    @Post("/string")
-    fun publish(@RequestBody message: String): HttpResponse<String> {
+    @Post("/string", produces=["text/plain"])
+    @ExecuteOn(TaskExecutors.BLOCKING)
+    fun publish(@Body message: String): HttpResponse<String> {
         try {
             producer.send(message)
             return ok("Message Sent")
         } catch (exception: Exception) {
+            logger.error(exception.message)
             return serverError()
         }
     }

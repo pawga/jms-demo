@@ -1,4 +1,4 @@
-package com.pawga.model
+package com.pawga.service
 
 import io.micronaut.jms.activemq.artemis.configuration.ActiveMqArtemisConfiguration.CONNECTION_FACTORY_BEAN_NAME
 import io.micronaut.jms.annotations.JMSProducer

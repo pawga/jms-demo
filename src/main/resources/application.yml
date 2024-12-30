@@ -6,6 +6,8 @@ micronaut:
       artemis:
         enabled: true
         connection-string: tcp://localhost:61616
+        username: admin
+        password: ZSE4zse4
   router:
     static-resources:
       swagger:
