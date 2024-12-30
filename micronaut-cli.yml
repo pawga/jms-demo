@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.pawga
+testFramework: kotest
+sourceLanguage: kotlin
+buildTool: gradle_kotlin
+features: [app-name, gradle, http-client, jms-activemq-artemis, jms-core, kotest, kotlin, kotlin-application, kotlin-extension-functions, ksp, logback, micronaut-aot, micronaut-build, micronaut-http-validation, netty-server, openapi, reactor-http-client, readme, serialization-jackson, shade, static-resources, swagger-ui, yaml, yaml-build]
